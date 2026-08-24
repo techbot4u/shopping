@@ -6,29 +6,41 @@
   <title>쇼핑모음</title>
   <style>
     body { font-family: sans-serif; margin: 20px; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 10px 0; }
+    h2 { text-align: center; margin-bottom: 20px; }
 
-    /* 링크 스타일 */
+    /* 그리드 레이아웃 */
+    ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+    }
+
+    /* 버튼 스타일 */
     a {
-      display: inline-block;
-      padding: 12px 20px;
+      display: block;
+      padding: 15px;
       background: #007bff;
       color: #fff;
       text-decoration: none;
-      border-radius: 6px;
-      position: relative; /* 툴팁 위치 기준 */
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background 0.3s, transform 0.2s;
     }
     a:hover {
       background: #0056b3;
+      transform: translateY(-2px);
     }
 
-    /* 툴팁 기본 숨김 */
+    /* 툴팁 */
     a .tooltip {
       visibility: hidden;
       opacity: 0;
       position: absolute;
-      bottom: 125%; /* 링크 위쪽에 표시 */
+      bottom: 125%;
       left: 50%;
       transform: translateX(-50%);
       background: #333;
@@ -39,20 +51,6 @@
       font-size: 0.9rem;
       transition: opacity 0.3s;
     }
-
-    /* 말풍선 꼬리 */
-    a .tooltip::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: #333 transparent transparent transparent;
-    }
-
-    /* 마우스 올렸을 때 표시 */
     a:hover .tooltip {
       visibility: visible;
       opacity: 1;
@@ -62,19 +60,19 @@
 <body>
   <h2>내 쇼핑 사이트</h2>
   <ul>
-	<li><a href="http://deg.kr/shopbox/a7db91" target="_blank" rel="noopener noreferrer">오늘의 추천상품</a></li>	
-    <li><a href="https://bitl.bz/S0YWE2" target="_blank" rel="noopener noreferrer">컬리</a></li>
-	<li><a href="https://bitl.bz/P1aoKl" target="_blank" rel="noopener noreferrer">현대홈쇼핑</a></li>
-	  <li><a href="https://bitl.bz/kznqBE" target="_blank" rel="noopener noreferrer">GS홈쇼핑</a></li>
-	<li><a href="https://bitl.bz/3laSX4" target="_blank" rel="noopener noreferrer">알리익스프레스</a></li>
-    <li><a href="https://bitl.bz/VnIypD" target="_blank" rel="noopener noreferrer">쿠팡<span class="tooltip">링크를 통해 구매 시 수수료를 제공받습니다</span></a></li>
-	<li><a href="https://bitl.bz/Q4gS3l" target="_blank" rel="noopener noreferrer">G마켓</a></li>	
-	<li><a href="https://bitl.bz/EwlPLP" target="_blank" rel="noopener noreferrer">11번가</a></li>
-	<li><a href="https://bitl.bz/xwrg4w" target="_blank" rel="noopener noreferrer">SSG</a></li>
-	<li><a href="https://bitl.bz/7KfCom" target="_blank" rel="noopener noreferrer">H패션몰</a></li>
-	<li><a href="https://bitl.bz/GLLEVg" target="_blank" rel="noopener noreferrer">CJ더마켓</a></li>
-	<li><a href="https://bitl.bz/3nLetk" target="_blank" rel="noopener noreferrer">교복몰</a></li>
-	<li><a href="https://bitl.bz/uzfOYK" target="_blank" rel="noopener noreferrer">교보문고</a></li>
+    <li><a href="http://deg.kr/shopbox/a7db91" target="_blank">오늘의 추천상품</a></li>
+    <li><a href="https://bitl.bz/S0YWE2" target="_blank">컬리</a></li>
+    <li><a href="https://bitl.bz/P1aoKl" target="_blank">현대홈쇼핑</a></li>
+    <li><a href="https://bitl.bz/kznqBE" target="_blank">GS홈쇼핑</a></li>
+    <li><a href="https://bitl.bz/3laSX4" target="_blank">알리익스프레스</a></li>
+    <li><a href="https://bitl.bz/VnIypD" target="_blank">쿠팡<span class="tooltip">링크를 통해 구매 시 수수료를 제공받습니다</span></a></li>
+    <li><a href="https://bitl.bz/Q4gS3l" target="_blank">G마켓</a></li>
+    <li><a href="https://bitl.bz/EwlPLP" target="_blank">11번가</a></li>
+    <li><a href="https://bitl.bz/xwrg4w" target="_blank">SSG</a></li>
+    <li><a href="https://bitl.bz/7KfCom" target="_blank">H패션몰</a></li>
+    <li><a href="https://bitl.bz/GLLEVg" target="_blank">CJ더마켓</a></li>
+    <li><a href="https://bitl.bz/3nLetk" target="_blank">교복몰</a></li>
+    <li><a href="https://bitl.bz/uzfOYK" target="_blank">교보문고</a></li>
   </ul>
 </body>
 </html>
