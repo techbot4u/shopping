@@ -55,24 +55,45 @@
       visibility: visible;
       opacity: 1;
     }
+
+    /* 컬리 버튼 전용 스타일 */
+    a.kurly {
+      background: #6A1B9A; /* 보라색 배경 (컬리 느낌) */
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px; /* 글자와 이미지 간격 */
+    }
+    
+    a.kurly img {
+      width: 24px;  /* 아이콘 크기 */
+      height: 24px;
+      border-radius: 4px; /* 모서리 둥글게 */
+    }    
   </style>
 </head>
 <body>
   <h2>내 쇼핑 사이트</h2>
   <ul>
-    <li><a href="http://deg.kr/shopbox/a7db91" target="_blank">오늘의 추천상품</a></li>
-    <li><a href="https://bitl.bz/S0YWE2" target="_blank">컬리</a></li>
-    <li><a href="https://bitl.bz/P1aoKl" target="_blank">현대홈쇼핑</a></li>
-    <li><a href="https://bitl.bz/kznqBE" target="_blank">GS홈쇼핑</a></li>
-    <li><a href="https://bitl.bz/3laSX4" target="_blank">알리익스프레스</a></li>
-    <li><a href="https://bitl.bz/VnIypD" target="_blank">쿠팡<span class="tooltip">링크를 통해 구매 시 수수료를 제공받습니다</span></a></li>
-    <li><a href="https://bitl.bz/Q4gS3l" target="_blank">G마켓</a></li>
-    <li><a href="https://bitl.bz/EwlPLP" target="_blank">11번가</a></li>
-    <li><a href="https://bitl.bz/xwrg4w" target="_blank">SSG</a></li>
-    <li><a href="https://bitl.bz/7KfCom" target="_blank">H패션몰</a></li>
-    <li><a href="https://bitl.bz/GLLEVg" target="_blank">CJ더마켓</a></li>
-    <li><a href="https://bitl.bz/3nLetk" target="_blank">교복몰</a></li>
-    <li><a href="https://bitl.bz/uzfOYK" target="_blank">교보문고</a></li>
+    <li><a href="http://deg.kr/shopbox/a7db91" target="_blank" rel="noopener noreferrer">오늘의 추천상품</a></li>
+    <li><a href="https://bitl.bz/S0YWE2" target="_blank" rel="noopener noreferrer" class="kurly">
+      <img src="https://d2nkkkpf88oxbk.cloudfront.net/static/v3.adpick/images/blank_1x1.png" alt="컬리 로고">
+      컬리
+    </a></li>
+    <li><a href="https://bitl.bz/P1aoKl" target="_blank" rel="noopener noreferrer">현대홈쇼핑</a></li>
+    <li><a href="https://bitl.bz/kznqBE" target="_blank" rel="noopener noreferrer">GS홈쇼핑</a></li>
+    <li><a href="https://bitl.bz/3laSX4" target="_blank" rel="noopener noreferrer">알리익스프레스</a></li>
+    <li><a href="https://bitl.bz/VnIypD" target="_blank" rel="noopener noreferrer">
+      쿠팡<span class="tooltip">링크를 통해 구매 시 수수료를 제공받습니다</span>
+    </a></li>
+    <li><a href="https://bitl.bz/Q4gS3l" target="_blank" rel="noopener noreferrer">G마켓</a></li>
+    <li><a href="https://bitl.bz/EwlPLP" target="_blank" rel="noopener noreferrer">11번가</a></li>
+    <li><a href="https://bitl.bz/xwrg4w" target="_blank" rel="noopener noreferrer">SSG</a></li>
+    <li><a href="https://bitl.bz/7KfCom" target="_blank" rel="noopener noreferrer">H패션몰</a></li>
+    <li><a href="https://bitl.bz/GLLEVg" target="_blank" rel="noopener noreferrer">CJ더마켓</a></li>
+    <li><a href="https://bitl.bz/3nLetk" target="_blank" rel="noopener noreferrer">교복몰</a></li>
+    <li><a href="https://bitl.bz/uzfOYK" target="_blank" rel="noopener noreferrer">교보문고</a></li>
   </ul>
 </body>
 </html>
