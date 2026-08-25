@@ -2,7 +2,7 @@
   "name": "내 쇼핑 사이트",
   "short_name": "쇼핑모음",
   "description": "자주 가는 쇼핑몰 링크 모음",
-  "start_url": "./shopping_links.html",
+  "start_url": "https://techbot4u.github.io/shopping",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
