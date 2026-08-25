@@ -29,13 +29,14 @@
       font-size: 1rem;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       transition: background 0.3s, transform 0.2s;
+      position: relative; /* 툴팁 위치 기준 */
     }
     a:hover {
       background: #0056b3;
       transform: translateY(-2px);
     }
 
-    /* 툴팁 */
+    /* 툴팁 (아래쪽 표시 + 화면 제한) */
     a .tooltip {
       visibility: hidden;
       opacity: 0;
@@ -51,6 +52,7 @@
       max-width: 90vw;     /* 화면 너비 제한 */
       font-size: 0.9rem;
       transition: opacity 0.3s;
+      z-index: 10;
     }
     a .tooltip::after {
       content: "";
@@ -62,6 +64,11 @@
       border-style: solid;
       border-color: transparent transparent #333 transparent;
     }
+    a:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
     /* 컬리 버튼 전용 스타일 */
     a.kurly {
       background: #6A1B9A; /* 보라색 배경 (컬리 느낌) */
