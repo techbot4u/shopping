@@ -17,6 +17,8 @@
   <meta name="apple-mobile-web-app-title" content="쇼핑모음">
 
   <style>
+    * { box-sizing: border-box; }
+
     body { font-family: sans-serif; margin: 20px; }
 
     .header-row {
@@ -215,37 +217,38 @@
       z-index: 1000;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
     .modal-backdrop.open { display: flex; }
     .modal {
       background: #fff;
       border-radius: 12px;
-      max-width: 340px;
+      max-width: 280px;
       width: 100%;
-      padding: 22px 20px;
+      padding: 16px 16px;
       text-align: left;
     }
     .modal h3 {
-      margin: 0 0 12px;
-      font-size: 1.05rem;
+      margin: 0 0 8px;
+      font-size: 0.95rem;
     }
     .modal p, .modal ol {
-      font-size: 0.9rem;
-      line-height: 1.6;
+      font-size: 0.82rem;
+      line-height: 1.5;
       color: #333;
-      margin: 0 0 8px;
-      padding-left: 18px;
+      margin: 0 0 6px;
+      padding-left: 16px;
+      word-break: keep-all;
     }
     .modal button {
-      margin-top: 10px;
+      margin-top: 8px;
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       border: none;
       border-radius: 8px;
       background: #222;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       cursor: pointer;
     }
   </style>
@@ -395,10 +398,7 @@
       if (isIOS && isSafari) {
         openModal(`
           <h3>즐겨찾기에 추가</h3>
-          <ol>
-            <li><b>공유 버튼 ⬆️</b>를 누르세요</li>
-            <li><b>"즐겨찾기에 추가"</b>를 선택하세요</li>
-          </ol>
+          <p>공유 버튼 ⬆️ → <b>"즐겨찾기에 추가"</b></p>
         `);
         return;
       }
@@ -406,8 +406,7 @@
       if (isAndroid) {
         openModal(`
           <h3>즐겨찾기에 추가</h3>
-          <p>주소창 오른쪽의 <b>☆ 별 아이콘</b>을 누르거나,</p>
-          <p>브라우저 메뉴(⋮) → <b>"즐겨찾기 추가"</b>를 선택하세요.</p>
+          <p>주소창 <b>☆</b> 아이콘 또는 메뉴(⋮) → <b>"즐겨찾기 추가"</b></p>
         `);
         return;
       }
@@ -417,7 +416,7 @@
       const shortcut = isMac ? 'Cmd + D' : 'Ctrl + D';
       openModal(`
         <h3>즐겨찾기에 추가</h3>
-        <p><b>${shortcut}</b> 를 누르면 이 페이지가 즐겨찾기에 바로 저장됩니다.</p>
+        <p><b>${shortcut}</b> 를 누르면 바로 추가됩니다.</p>
       `);
     });
 
@@ -426,7 +425,7 @@
       const { isIOS, isAndroid, isSafari, isStandalone } = detectPlatform();
 
       if (isStandalone) {
-        openModal('<h3>이미 추가되어 있어요</h3><p>이 페이지는 이미 홈 화면 앱으로 실행 중입니다.</p>');
+        openModal('<h3>이미 추가됨</h3><p>이미 홈 화면 앱으로 실행 중이에요.</p>');
         return;
       }
 
@@ -437,8 +436,8 @@
         deferredPrompt = null;
         if (outcome !== 'accepted') {
           openModal(`
-            <h3>홈 화면에 추가하기</h3>
-            <p>브라우저 메뉴(⋮) → <b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b>를 눌러주세요.</p>
+            <h3>홈 화면에 추가</h3>
+            <p>메뉴(⋮) → <b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b></p>
           `);
         }
         return;
@@ -448,11 +447,7 @@
       if (isIOS && isSafari) {
         openModal(`
           <h3>홈 화면에 추가</h3>
-          <ol>
-            <li>하단(또는 상단) <b>공유 버튼 ⬆️</b>를 누르세요</li>
-            <li>목록에서 <b>"홈 화면에 추가"</b>를 선택하세요</li>
-            <li><b>추가</b>를 누르면 완료됩니다</li>
-          </ol>
+          <p>공유 버튼 ⬆️ → <b>"홈 화면에 추가"</b> → 추가</p>
         `);
         return;
       }
@@ -460,18 +455,16 @@
       // 3) Android지만 beforeinstallprompt가 아직 안 뜬 경우
       if (isAndroid) {
         openModal(`
-          <h3>홈 화면에 추가하기</h3>
-          <p>브라우저 오른쪽 위 메뉴(⋮)를 누른 뒤,</p>
-          <p><b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b>를 선택하세요.</p>
+          <h3>홈 화면에 추가</h3>
+          <p>메뉴(⋮) → <b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b></p>
         `);
         return;
       }
 
       // 4) 데스크톱 브라우저: 앱 설치 아이콘 안내 (즐겨찾기와는 별도 기능)
       openModal(`
-        <h3>홈 화면에 추가(앱 설치)</h3>
-        <p>Chrome·Edge라면 주소창 오른쪽의 <b>설치 아이콘(⊕)</b>을 눌러 앱처럼 설치할 수 있어요.</p>
-        <p>해당 아이콘이 안 보이면 브라우저 메뉴에서 <b>"앱 설치"</b>를 찾아보세요.</p>
+        <h3>홈 화면에 추가</h3>
+        <p>주소창의 <b>설치 아이콘(⊕)</b>을 눌러주세요.</p>
       `);
     });
   </script>
