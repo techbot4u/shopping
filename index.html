@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>쇼핑모음</title>
+
+  <!-- 홈 화면 추가 / PWA 설정 -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#FF5A00">
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- iOS 홈 화면 추가 시 브라우저 주소창 없이 앱처럼 열리도록 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="쇼핑모음">
+
   <style>
     body { font-family: sans-serif; margin: 20px; }
     h2 { text-align: center; margin-bottom: 20px; }
@@ -115,10 +127,82 @@
       visibility: visible;
       opacity: 1;
     }
+
+    /* 설치 / 즐겨찾기 버튼 */
+    .install-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    #installBtn {
+      background: #FF5A00;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    }
+    #installBtn:active { opacity: 0.85; }
+
+    /* 안내 모달 */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 340px;
+      width: 100%;
+      padding: 22px 20px;
+      text-align: left;
+    }
+    .modal h3 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+    }
+    .modal p, .modal ol {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #333;
+      margin: 0 0 8px;
+      padding-left: 18px;
+    }
+    .modal button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #222;
+      color: #fff;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <h2>내 쇼핑 사이트</h2>
+
+  <div class="install-bar">
+    <button id="installBtn" type="button">📌 즐겨찾기 / 홈 화면에 추가</button>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" id="modalContent">
+      <!-- JS가 상황에 맞는 안내를 채워 넣습니다 -->
+    </div>
+  </div>
+
   <ul>
     <li><a href="http://deg.kr/shopbox/a7db91" target="_blank" class="default">오늘의 추천상품</a></li>
     <li><a href="https://bitl.bz/S0YWE2" target="_blank" class="kurly">컬리</a></li>
@@ -191,6 +275,98 @@
         document.querySelectorAll('.tooltip.show').forEach(t => t.classList.remove('show'));
         document.querySelectorAll('li.active').forEach(x => x.classList.remove('active'));
       }
+    });
+  </script>
+
+  <script>
+    // ── 즐겨찾기 / 홈 화면 추가 버튼 ──────────────────────────────
+    const installBtn = document.getElementById('installBtn');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalContent = document.getElementById('modalContent');
+
+    let deferredPrompt = null; // Android/Chrome 계열의 네이티브 설치 프롬프트
+
+    // Android Chrome 등에서 "설치 가능" 이벤트가 오면 저장해뒀다가 버튼 클릭 시 사용
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    function detectPlatform() {
+      const ua = navigator.userAgent;
+      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      const isAndroid = /Android/.test(ua);
+      const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+      return { isIOS, isAndroid, isSafari, isStandalone };
+    }
+
+    function openModal(html) {
+      modalContent.innerHTML = html + '<button id="modalCloseBtn" type="button">닫기</button>';
+      modalBackdrop.classList.add('open');
+      document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    }
+    function closeModal() {
+      modalBackdrop.classList.remove('open');
+    }
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+
+    installBtn.addEventListener('click', async () => {
+      const { isIOS, isAndroid, isSafari, isStandalone } = detectPlatform();
+
+      if (isStandalone) {
+        openModal('<h3>이미 추가되어 있어요</h3><p>이 페이지는 이미 홈 화면 앱으로 실행 중입니다.</p>');
+        return;
+      }
+
+      // 1) Android/Chrome, Edge 등: 네이티브 "홈 화면에 추가" 프롬프트 지원
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (outcome !== 'accepted') {
+          openModal(`
+            <h3>홈 화면에 추가하기</h3>
+            <p>브라우저 메뉴(⋮) → <b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b>를 눌러주세요.</p>
+          `);
+        }
+        return;
+      }
+
+      // 2) iOS Safari: beforeinstallprompt 미지원 → 수동 안내
+      if (isIOS && isSafari) {
+        openModal(`
+          <h3>iPhone/iPad 홈 화면에 추가</h3>
+          <ol>
+            <li>하단(또는 상단) <b>공유 버튼 ⬆️</b>를 누르세요</li>
+            <li>목록에서 <b>"홈 화면에 추가"</b>를 선택하세요</li>
+            <li><b>추가</b>를 누르면 완료됩니다</li>
+          </ol>
+        `);
+        return;
+      }
+
+      // 3) Android지만 beforeinstallprompt가 아직 안 뜬 경우
+      if (isAndroid) {
+        openModal(`
+          <h3>홈 화면에 추가하기</h3>
+          <p>브라우저 오른쪽 위 메뉴(⋮)를 누른 뒤,</p>
+          <p><b>"홈 화면에 추가"</b> 또는 <b>"앱 설치"</b>를 선택하세요.</p>
+        `);
+        return;
+      }
+
+      // 4) 데스크톱 브라우저: 즐겨찾기 단축키 + 설치 아이콘 안내
+      const isMac = navigator.platform.toUpperCase().includes('MAC');
+      const shortcut = isMac ? 'Cmd + D' : 'Ctrl + D';
+      openModal(`
+        <h3>즐겨찾기 / 설치</h3>
+        <p><b>${shortcut}</b> 를 누르면 즐겨찾기에 바로 추가됩니다.</p>
+        <p>Chrome·Edge라면 주소창 오른쪽의 <b>설치 아이콘(⊕)</b>을 눌러 앱처럼 설치할 수도 있어요.</p>
+      `);
     });
   </script>
 </body>
