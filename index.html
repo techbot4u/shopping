@@ -8,7 +8,6 @@
     body { font-family: sans-serif; margin: 20px; }
     h2 { text-align: center; margin-bottom: 20px; }
 
-    /* 그리드 레이아웃 */
     ul {
       list-style: none;
       padding: 0;
@@ -17,7 +16,6 @@
       gap: 15px;
     }
 
-    /* 기본 버튼 스타일 */
     a {
       display: flex;
       align-items: center;
@@ -37,6 +35,28 @@
       transform: translateY(-2px);
       opacity: 0.9;
     }
+
+    a img {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    /* 브랜드별 색상 */
+    .kurly { background: #6A1B9A; }
+    .coupang { background: #FF5A00; }
+    .gmarket { background: #008000; }
+    .elevenst { background: #FF0000; }
+    .ssg { background: #222; }
+    .hyundai { background: #0066CC; }
+    .gs { background: #00AEEF; }
+    .aliexpress { background: #E52D27; }
+    .hfashion { background: #333399; }
+    .cj { background: #FF6600; }
+    .kyobo { background: #2E8B57; }
+    .school { background: #444; }
+    .default { background: #222; }
 
     /* 툴팁 */
     a .tooltip {
@@ -70,49 +90,37 @@
       visibility: visible;
       opacity: 1;
     }
-
-    /* 브랜드별 색상 */
-    .kurly { background: #6A1B9A; }       /* 컬리 보라색 */
-    .coupang { background: #FF5A00; }     /* 쿠팡 주황색 */
-    .gmarket { background: #008000; }     /* G마켓 초록색 */
-    .elevenst { background: #FF0000; }    /* 11번가 빨강 */
-    .ssg { background: #222; }            /* SSG 검정 */
-    .hyundai { background: #0066CC; }     /* 현대홈쇼핑 파랑 */
-    .gs { background: #00AEEF; }          /* GS홈쇼핑 하늘색 */
-    .aliexpress { background: #E52D27; }  /* 알리익스프레스 빨강 */
-    .hfashion { background: #333399; }    /* H패션몰 남색 */
-    .cj { background: #FF6600; }          /* CJ더마켓 주황 */
-    .kyobo { background: #2E8B57; }       /* 교보문고 초록 */
-    .school { background: #444; }         /* 교복몰 회색 */
-
-    /* 아이콘 크기 */
-    a img {
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-    }
   </style>
 </head>
 <body>
   <h2>내 쇼핑 사이트</h2>
   <ul>
-    <li><a href="http://deg.kr/shopbox/a7db91" target="_blank">오늘의 추천상품</a></li>
+    <li><a href="http://deg.kr/shopbox/a7db91" target="_blank" class="default">오늘의 추천상품</a></li>
     <li><a href="https://bitl.bz/S0YWE2" target="_blank" class="kurly">
-      <img src="https://d2nkkkpf88oxbk.cloudfront.net/static/v3.adpick/images/blank_1x1.png" alt="컬리"> 컬리
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/MarketKurly_logo.png" alt="컬리"> 컬리
     </a></li>
     <li><a href="https://bitl.bz/P1aoKl" target="_blank" class="hyundai">현대홈쇼핑</a></li>
     <li><a href="https://bitl.bz/kznqBE" target="_blank" class="gs">GS홈쇼핑</a></li>
-    <li><a href="https://bitl.bz/3laSX4" target="_blank" class="aliexpress">알리익스프레스</a></li>
-    <li><a href="https://bitl.bz/VnIypD" target="_blank" class="coupang">
-      쿠팡<span class="tooltip">링크를 통해 구매 시 수수료를 제공받습니다</span>
+    <li><a href="https://bitl.bz/3laSX4" target="_blank" class="aliexpress">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/AliExpress_logo.svg" alt="알리익스프레스"> 알리익스프레스
     </a></li>
-    <li><a href="https://bitl.bz/Q4gS3l" target="_blank" class="gmarket">G마켓</a></li>
-    <li><a href="https://bitl.bz/EwlPLP" target="_blank" class="elevenst">11번가</a></li>
+    <li><a href="https://bitl.bz/VnIypD" target="_blank" class="coupang">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Coupang_logo.svg" alt="쿠팡"> 쿠팡
+      <span class="tooltip">링크를 통해 구매 시 수수료를 제공받습니다</span>
+    </a></li>
+    <li><a href="https://bitl.bz/Q4gS3l" target="_blank" class="gmarket">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Gmarket_logo.svg" alt="G마켓"> G마켓
+    </a></li>
+    <li><a href="https://bitl.bz/EwlPLP" target="_blank" class="elevenst">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/11st_logo.svg" alt="11번가"> 11번가
+    </a></li>
     <li><a href="https://bitl.bz/xwrg4w" target="_blank" class="ssg">SSG</a></li>
     <li><a href="https://bitl.bz/7KfCom" target="_blank" class="hfashion">H패션몰</a></li>
     <li><a href="https://bitl.bz/GLLEVg" target="_blank" class="cj">CJ더마켓</a></li>
     <li><a href="https://bitl.bz/3nLetk" target="_blank" class="school">교복몰</a></li>
-    <li><a href="https://bitl.bz/uzfOYK" target="_blank" class="kyobo">교보문고</a></li>
+    <li><a href="https://bitl.bz/uzfOYK" target="_blank" class="kyobo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Kyobo_Book_Centre_logo.png" alt="교보문고"> 교보문고
+    </a></li>
   </ul>
 </body>
 </html>
