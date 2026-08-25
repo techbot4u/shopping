@@ -29,8 +29,8 @@
       font-size: 1rem;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       transition: background 0.3s, transform 0.2s;
-      position: relative; /* 툴팁 위치 기준 */
-      overflow: visible;  /* 툴팁이 잘리지 않도록 */
+      position: relative;   /* 툴팁 기준 */
+      overflow: visible;    /* 툴팁 잘리지 않도록 */
     }
     a:hover {
       background: #0056b3;
@@ -53,7 +53,7 @@
       max-width: 90vw;     /* 화면 너비 제한 */
       font-size: 0.9rem;
       transition: opacity 0.3s;
-      z-index: 10;
+      z-index: 999;        /* 버튼 위로 표시 */
     }
     a .tooltip::after {
       content: "";
