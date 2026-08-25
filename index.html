@@ -251,11 +251,62 @@
       font-size: 0.88rem;
       cursor: pointer;
     }
+
+    /* 개발자 블로그 링크 */
+    .blog-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 14px 16px;
+      background: #03C75A; /* 네이버 블로그 브랜드 컬러 */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .blog-link:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+    .blog-link .blog-icon {
+      display: block;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.6);
+    }
+    .blog-link .blog-text small {
+      display: block;
+      font-weight: 400;
+      font-size: 0.75rem;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    /* 광고 영역 */
+    .ad-section {
+      margin-top: 16px;
+    }
+    .ad-label {
+      font-size: 0.72rem;
+      color: #999;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .ad-wrap {
+      width: 100%;
+      overflow: hidden; /* 광고 iframe이 화면 폭을 넘지 않도록 */
+    }
   </style>
 </head>
 <body>
   <div class="header-row">
-    <h2>내 쇼핑 사이트</h2>
+    <h2>쇼핑 사이트</h2>
     <div class="header-actions">
       <button id="bookmarkBtn" class="icon-btn" type="button" data-label="즐겨찾기 추가" aria-label="즐겨찾기 추가">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -296,6 +347,21 @@
     <li><a href="https://bitl.bz/3nLetk" target="_blank" class="school">교복몰</a></li>
     <li><a href="https://bitl.bz/uzfOYK" target="_blank" class="kyobo">교보문고</a></li>
   </ul>
+
+  <a class="blog-link" href="https://blog.naver.com/tech-bot" target="_blank" rel="noopener">
+    <img class="blog-icon" src="techbot-avatar.png" alt="TechBot">
+    <span class="blog-text">
+      개발자 블로그
+      <small>blog.naver.com/tech-bot</small>
+    </span>
+  </a>
+
+  <div class="ad-section">
+    <p class="ad-label">광고</p>
+    <div class="ad-wrap">
+      <iframe src="https://adpick.co.kr/nativeAD/ad.php?bannerType=type10&limit=2&affid=a7db91&frameId=AdpickAdFrame_2026825%40214424&popup=false" width="100%" frameborder="0" scrolling="no" data-adpick_nativeAD id="AdpickAdFrame_2026825@214424" referrerpolicy="unsafe-url"></iframe><script src="https://adpick.co.kr/nativeAD/script.js" async="true"></script>
+    </div>
+  </div>
 
   <script>
     // 화면(뷰포트) 밖으로 튤팁이 잘리지 않도록 위치를 보정하고,
