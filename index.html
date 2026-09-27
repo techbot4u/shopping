@@ -19,7 +19,8 @@
   <style>
     * { box-sizing: border-box; }
 
-    body { font-family: sans-serif; margin: 20px; }
+    html, body { overflow-x: hidden; }
+    body { font-family: sans-serif; margin: 20px; }    
 
     .header-row {
       display: flex;
@@ -251,6 +252,24 @@
       font-size: 0.88rem;
       cursor: pointer;
     }
+    .modal button.primary {
+      background: #FF5A00;
+      margin-top: 6px;
+    }
+    .modal .kakao-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: #FEE500;
+      color: #3C1E1E;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      vertical-align: -3px;
+      margin: 0 2px;
+    }    
 
     /* 개발자 블로그 링크 */
     .blog-link {
@@ -287,7 +306,34 @@
       opacity: 0.85;
       margin-top: 2px;
     }
-
+    .inapp-banner {
+      display: none;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 10px;
+      background: #FEE500;
+      color: #3C1E1E;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 0.82rem;
+    }
+    .inapp-banner.show { display: flex; }
+    .inapp-banner span { word-break: keep-all; line-height: 1.4; }
+    .inapp-banner button {
+      flex-shrink: 0;
+      margin-left: auto;
+      border: none;
+      border-radius: 6px;
+      background: #3C1E1E;
+      color: #FEE500;
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
     /* 광고 영역 */
     .ad-section {
       margin-top: 16px;
@@ -323,7 +369,10 @@
       </button>
     </div>
   </div>
-
+  <div class="inapp-banner" id="inappBanner">
+    <span>⚠️ 카카오톡 브라우저에서는 즐겨찾기/설치가 안 돼요.</span>
+    <button id="inappBannerBtn" type="button">브라우저로 열기</button>
+  </div>  
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" id="modalContent">
       <!-- JS가 상황에 맞는 안내를 채워 넣습니다 -->
@@ -451,10 +500,48 @@
       const isAndroid = /Android/.test(ua);
       const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-        || window.navigator.standalone === true;
-      return { isIOS, isAndroid, isSafari, isStandalone };
-    }
+        || window.navigator.standalone === true;      
 
+      // 카카오톡 인앱 브라우저: 즐겨찾기/홈 화면 추가 기능 자체를 지원하지 않음
+      const isKakao = /KAKAOTALK/i.test(ua);
+      // 그 외 흔한 인앱 브라우저(네이버 앱, 인스타그램, 페이스북, 라인 등)도 동일한 제약
+      const isOtherInApp = /NAVER|Instagram|FBAN|FBAV|Line\//i.test(ua);
+   
+      return { isIOS, isAndroid, isSafari, isStandalone, isKakao, isOtherInApp };
+     }
+   
+    // 카카오톡 인앱 브라우저를 벗어나 기기의 기본 브라우저로 현재 페이지를 새로 여는 함수
+    function openInExternalBrowser() {
+      const url = window.location.href;
+      window.location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url);
+    }      
+    }
+    // 카카오톡 인앱 브라우저면 페이지 진입 즉시 상단에 안내 배너 표시
+    (function () {
+      const { isKakao } = detectPlatform();
+      if (!isKakao) return;
+      const banner = document.getElementById('inappBanner');
+      banner.classList.add('show');
+      document.getElementById('inappBannerBtn').addEventListener('click', openInExternalBrowser);
+    })();
+    
+    // 카카오톡 등 인앱 브라우저에서 공통으로 보여줄 안내
+    function openInAppWarning(isKakao) {
+      if (isKakao) {
+        openModal(`
+          <h3>카카오톡 브라우저에서는 안 돼요</h3>
+          <p>카카오톡 인앱 브라우저는 즐겨찾기·홈 화면 추가 기능을 지원하지 않아요.</p>
+          <p>아래 버튼으로 <b>기본 브라우저(Chrome/Safari)</b>로 열어주세요.</p>
+          <button class="primary" id="openExternalBtn" type="button">기본 브라우저로 열기</button>
+          <p style="margin-top:8px;">버튼이 안 되면 오른쪽 위 <b>메뉴(⋯)</b> → <b>"다른 브라우저로 열기"</b></p>
+        `);
+        const extBtn = document.getElementById('openExternalBtn');
+        if (extBtn) extBtn.addEventListener('click', openInExternalBrowser);
+        return true;
+      }
+      return false;
+    }
+    
     function openModal(html) {
       modalContent.innerHTML = html + '<button id="modalCloseBtn" type="button">닫기</button>';
       modalBackdrop.classList.add('open');
@@ -469,8 +556,18 @@
 
     // ── ① 즐겨찾기 추가: 브라우저에 "북마크"로 저장 (홈 화면 아이콘 아님) ──
     bookmarkBtn.addEventListener('click', () => {
-      const { isIOS, isAndroid, isSafari } = detectPlatform();
-
+      const { isIOS, isAndroid, isSafari, isKakao, isOtherInApp } = detectPlatform();
+      if (isKakao) { openInAppWarning(true); return; }
+      
+      if (isOtherInApp) {
+        openModal(`
+          <h3>이 앱 브라우저에서는 안 돼요</h3>
+          <p>지금 열려 있는 인앱 브라우저는 즐겨찾기 기능을 지원하지 않아요.</p>
+          <p>오른쪽 위 <b>메뉴</b>에서 <b>"다른 브라우저로 열기"</b>를 선택해주세요.</p>
+        `);
+        return;
+      }
+      
       if (isIOS && isSafari) {
         openModal(`
           <h3>즐겨찾기에 추가</h3>
@@ -498,8 +595,19 @@
 
     // ── ② 홈 화면에 추가: 앱처럼 아이콘 설치 (PWA) ──────────────────
     homeBtn.addEventListener('click', async () => {
-      const { isIOS, isAndroid, isSafari, isStandalone } = detectPlatform();
+      const { isIOS, isAndroid, isSafari, isStandalone, isKakao, isOtherInApp } = detectPlatform();
 
+     if (isKakao) { openInAppWarning(true); return; }
+      
+     if (isOtherInApp) {
+        openModal(`
+          <h3>이 앱 브라우저에서는 안 돼요</h3>
+          <p>지금 열려 있는 인앱 브라우저는 홈 화면 추가 기능을 지원하지 않아요.</p>
+          <p>오른쪽 위 <b>메뉴</b>에서 <b>"다른 브라우저로 열기"</b>를 선택해주세요.</p>
+        `);
+        return;
+      }      
+      
       if (isStandalone) {
         openModal('<h3>이미 추가됨</h3><p>이미 홈 화면 앱으로 실행 중이에요.</p>');
         return;
