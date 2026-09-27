@@ -516,18 +516,21 @@
       window.location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url);
     }
     
-    // 카카오톡 인앱 브라우저면 페이지 진입 즉시 상단에 안내 배너 표시
-    (function () {
-      const { isKakao } = detectPlatform();
-      if (!isKakao) return;
+    function showKakaoBanner() {
       const banner = document.getElementById('inappBanner');
       banner.classList.add('show');
+    }
+
+    // 카카오톡 인앱 브라우저에서는 페이지 진입 시 안내 배너 표시
+    if (detectPlatform().isKakao) {
+      showKakaoBanner();
       document.getElementById('inappBannerBtn').addEventListener('click', openInExternalBrowser);
-    })();
+    }
     
     // 카카오톡 등 인앱 브라우저에서 공통으로 보여줄 안내
     function openInAppWarning(isKakao) {
       if (isKakao) {
+        showKakaoBanner();
         openModal(`
           <h3>카카오톡 브라우저에서는 안 돼요</h3>
           <p>카카오톡 인앱 브라우저는 즐겨찾기·홈 화면 추가 기능을 지원하지 않아요.</p>
