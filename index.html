@@ -306,34 +306,6 @@
       opacity: 0.85;
       margin-top: 2px;
     }
-    .inapp-banner {
-      display: none;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px 10px;
-      background: #FEE500;
-      color: #3C1E1E;
-      padding: 10px 14px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      font-size: 0.82rem;
-    }
-    .inapp-banner.show { display: flex; }
-    .inapp-banner span { word-break: keep-all; line-height: 1.4; }
-    .inapp-banner button {
-      flex-shrink: 0;
-      margin-left: auto;
-      border: none;
-      border-radius: 6px;
-      background: #3C1E1E;
-      color: #FEE500;
-      padding: 7px 12px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-    }
     /* 광고 영역 */
     .ad-section {
       margin-top: 16px;
@@ -369,10 +341,6 @@
       </button>
     </div>
   </div>
-  <div class="inapp-banner" id="inappBanner">
-    <span>⚠️ 카카오톡 브라우저에서는 즐겨찾기/설치가 안 돼요.</span>
-    <button id="inappBannerBtn" type="button">브라우저로 열기</button>
-  </div>  
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" id="modalContent">
       <!-- JS가 상황에 맞는 안내를 채워 넣습니다 -->
@@ -516,21 +484,9 @@
       window.location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url);
     }
     
-    function showKakaoBanner() {
-      const banner = document.getElementById('inappBanner');
-      banner.classList.add('show');
-    }
-
-    // 카카오톡 인앱 브라우저에서는 페이지 진입 시 안내 배너 표시
-    if (detectPlatform().isKakao) {
-      showKakaoBanner();
-      document.getElementById('inappBannerBtn').addEventListener('click', openInExternalBrowser);
-    }
-    
     // 카카오톡 등 인앱 브라우저에서 공통으로 보여줄 안내
     function openInAppWarning(isKakao) {
       if (isKakao) {
-        showKakaoBanner();
         openModal(`
           <h3>카카오톡 브라우저에서는 안 돼요</h3>
           <p>카카오톡 인앱 브라우저는 즐겨찾기·홈 화면 추가 기능을 지원하지 않아요.</p>
