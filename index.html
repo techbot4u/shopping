@@ -311,6 +311,55 @@
       opacity: 0.85;
       margin-top: 2px;
     }
+    /* 설치 앱 광고 */
+    .app-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 14px 16px;
+      background: #1F4E79;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .app-link:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+    .app-link .app-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .app-link .app-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .app-link .app-text small {
+      display: block;
+      font-weight: 400;
+      font-size: 0.75rem;
+      opacity: 0.9;
+      margin-top: 2px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+    .app-link .app-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: #fff;
+      color: #1F4E79;
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
     /* 광고 영역 */
     .ad-section {
       margin-top: 16px;
@@ -391,12 +440,21 @@
     </span>
   </a>
 
-  <div class="ad-section">
+  <a class="app-link" href="https://play.google.com/store/apps/details?id=com.myinvest.familywealth" target="_blank" rel="noopener">
+    <img class="app-icon" src="familywealth-icon.png" alt="가족자산관리">
+    <span class="app-text">
+      가족자산관리 앱 설치
+      <small>가족 구성원별 증권 계좌·보유 종목을 한눈에 관리하는 자산관리 앱 (개인 자산 데이터는 기기에만 저장)</small>
+    </span>
+    <span class="app-badge">무료</span>
+  </a>
+
+  <!--div class="ad-section">
     <p class="ad-label">광고</p>
     <div class="ad-wrap">
       <iframe src="https://adpick.co.kr/nativeAD/ad.php?bannerType=type10&limit=2&affid=a7db91&frameId=AdpickAdFrame_2026825%40214424&popup=false" width="100%" frameborder="0" scrolling="no" data-adpick_nativeAD id="AdpickAdFrame_2026825@214424" referrerpolicy="unsafe-url"></iframe><script src="https://adpick.co.kr/nativeAD/script.js" async="true"></script>
     </div>
-  </div>
+  </div-->
 
   <script>
     // 화면(뷰포트) 밖으로 튤팁이 잘리지 않도록 위치를 보정하고,
